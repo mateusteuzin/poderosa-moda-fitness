@@ -25,7 +25,7 @@
   --sans:'Jost', system-ui, sans-serif;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--sans);
@@ -362,35 +362,68 @@ img{display:block;max-width:100%}
   .nav{
     position:absolute;top:100%;left:0;right:0;
     flex-direction:column;background:#fff;
-    padding:24px;gap:18px;align-items:flex-start;
+    padding:24px;gap:0;align-items:stretch;
     transform:translateY(-12px);opacity:0;pointer-events:none;
     transition:.3s var(--ease);box-shadow:var(--shadow-md);
-    flex:unset;margin:0;
+    flex:unset;margin:0;z-index:100;
   }
   .nav.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav a{
+    padding:14px 0;font-size:15px;
+    border-bottom:1px solid var(--gray-100);
+  }
+  .nav a:last-child{border-bottom:none}
+  .nav a:after{display:none}
   .actions .icon-btn:nth-child(-n+2){display:none}
   .shop{grid-template-columns:1fr;gap:32px}
-  .filters{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+  .filters{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
   .filters__head{grid-column:1/-1}
-  .hero__card{grid-template-columns:1fr;text-align:center;padding-bottom:24px}
+  .hero__card{grid-template-columns:1fr;text-align:center;padding:32px 24px 24px}
   .hero__card:before{display:none}
-  .hero__model{height:300px;margin:0 auto;align-self:center;margin-top:18px;width:auto}
+  .hero__model{height:260px;margin:0 auto;align-self:center;margin-top:0;width:auto;max-width:280px}
+  .hero__eyebrow{font-size:12px;letter-spacing:.3em}
+  .hero__sub{font-size:11px;letter-spacing:.2em;margin-bottom:24px}
+  .btn{padding:16px 32px;font-size:13px;width:100%;text-align:center}
   .footer__inner{grid-template-columns:1fr 1fr;gap:36px}
   .modal-content{flex-direction:column;padding:20px;max-height:90vh;overflow-y:auto}
   .modal-info{padding-top:0}
+  .modal-info h2{font-size:28px}
+  .modal-price{font-size:22px}
   .thumb{width:65px;height:80px}
+  .whatsapp{width:52px;height:52px;right:16px;bottom:16px}
+  .whatsapp svg{width:24px;height:24px}
 }
 @media (max-width:560px){
   .topbar__inner{justify-content:center;padding:8px 16px;gap:14px}
   .topbar__item:nth-child(3){display:none}
-  .header__inner{padding:14px 16px}
-  .hero{padding:0 16px}
-  .shop{padding:0 16px;margin:32px auto}
-  .grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}
-  .product-info{padding:12px}
-  .product-info h3{font-size:15px}
-  .product-info .price{font-size:18px}
-  .footer__inner{grid-template-columns:1fr;padding:40px 24px}
-  .hero__title{font-size:54px}
-  .filters{grid-template-columns:1fr}
+  .header__inner{padding:12px 16px}
+  .logo__img{height:48px}
+  .hero{padding:0 12px}
+  .hero__card{padding:28px 16px 20px;border-radius:20px}
+  .hero__model{height:200px;max-width:220px}
+  .hero__title{font-size:42px;margin-bottom:12px}
+  .hero__sub{font-size:10px;margin-bottom:20px}
+  .btn{padding:15px 24px;font-size:12px}
+  .shop{padding:0 12px;margin:24px auto}
+  .products__head h2{font-size:13px;letter-spacing:.15em}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px 10px}
+  .product-card{border-radius:16px}
+  .product-image{border-radius:14px}
+  .product-info{padding:10px}
+  .product-info h3{font-size:13px;margin-bottom:4px}
+  .product-info .stars{font-size:11px;margin-bottom:6px}
+  .product-info .price{font-size:16px;margin-bottom:10px}
+  .buy-btn{padding:10px;border-radius:10px;font-size:12px}
+  .filters{grid-template-columns:1fr;gap:0}
+  .filter-group{padding:14px 0}
+  .footer__inner{grid-template-columns:1fr;padding:32px 16px;gap:28px}
+  .footer h4{font-size:11px}
+  .footer a{font-size:12px;padding:5px 0}
+  .newsletter{flex-direction:column;border-radius:12px}
+  .newsletter input{padding:14px 16px}
+  .newsletter button{padding:14px;border-radius:0 0 12px 12px}
+  .whatsapp-cta .btn--whatsapp{padding:14px 28px;font-size:13px}
+  .modal-content{padding:16px;border-radius:20px}
+  .close-modal{width:40px;height:40px;font-size:22px;top:12px;right:12px}
+  .select select{min-width:160px;font-size:12px;padding:8px 32px 8px 12px}
 }

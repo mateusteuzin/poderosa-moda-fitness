@@ -306,14 +306,16 @@ img{display:block;max-width:100%}
 .social{margin-top:16px;display:flex;gap:12px;align-items:center}
 .social__link{
   width:42px;height:42px;border-radius:50%;
-  display:grid;place-items:center;
+  display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,var(--pink-50),var(--pink-100));
   border:1px solid rgba(224,116,137,.25);
   color:var(--pink-500);
   box-shadow:var(--shadow-sm);
   transition:transform .2s var(--ease);
+  overflow:hidden;
+  flex-shrink:0;
 }
-.social__link svg{width:22px;height:22px;fill:var(--pink-500)}
+.social__link svg{width:24px;height:24px;fill:var(--pink-500);display:block;flex-shrink:0}
 .social__link:hover{transform:translateY(-2px)}
 
 /* === Whatsapp CTA === */
@@ -341,11 +343,12 @@ img{display:block;max-width:100%}
 .whatsapp{
   position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;
   background:linear-gradient(135deg,var(--pink-300),var(--pink-500));
-  display:grid;place-items:center;z-index:40;
+  display:flex;align-items:center;justify-content:center;z-index:40;
   box-shadow:0 10px 25px -6px rgba(224,116,137,.6);
   transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  overflow:hidden;
 }
-.whatsapp svg{width:28px;height:28px;fill:#ffffff}
+.whatsapp svg{width:28px;height:28px;fill:#ffffff;display:block;flex-shrink:0}
 
 .whatsapp:hover{transform:scale(1.08) rotate(-4deg);box-shadow:0 16px 35px -10px rgba(224,116,137,.7)}
 

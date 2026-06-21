@@ -252,6 +252,27 @@
   background: var(--pink-50);
 }
 
+.upload-box__buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.upload-box__button {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+}
+
+@media (max-width: 420px) {
+  .upload-box__button {
+    min-height: 54px;
+    font-size: 13px;
+  }
+}
+
+
+
 .upload-box strong {
   display: block;
 }
@@ -420,6 +441,11 @@
   .admin-shell {
     padding: 14px;
   }
+
+  .upload-box__buttons {
+    grid-template-columns: 1fr;
+  }
+
 
   .admin-login__card,
   .admin-panel,

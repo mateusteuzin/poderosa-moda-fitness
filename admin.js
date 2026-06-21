@@ -5,6 +5,10 @@ let products = [];
 let currentImages = [];
 let draggedImage = null;
 
+const imageGalleryInput = document.getElementById("imageGalleryInput");
+const imageCameraInput = document.getElementById("imageCameraInput");
+
+
 const loginView = document.getElementById("loginView");
 const dashboardView = document.getElementById("dashboardView");
 const setupAlert = document.getElementById("setupAlert");
@@ -37,7 +41,12 @@ function bindEvents() {
   productForm?.addEventListener("submit", handleSave);
   document.getElementById("deleteButton")?.addEventListener("click", handleDelete);
   document.getElementById("toggleActiveButton")?.addEventListener("click", handleToggleActive);
-  document.getElementById("imageUpload")?.addEventListener("change", handleUpload);
+
+  document.getElementById("chooseGalleryButton")?.addEventListener("click", () => imageGalleryInput.click());
+  document.getElementById("chooseCameraButton")?.addEventListener("click", () => imageCameraInput.click());
+  imageGalleryInput?.addEventListener("change", handleUploadFromInput);
+  imageCameraInput?.addEventListener("change", handleUploadFromInput);
+
   document.getElementById("adminSearch")?.addEventListener("input", renderAdminList);
 }
 
@@ -228,7 +237,7 @@ async function toggleProductActive(product) {
   }
 }
 
-async function handleUpload(event) {
+async function handleUploadFromInput(event) {
   clearAlert();
   try {
     const urls = await uploadProductImages(event.target.files);

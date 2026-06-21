@@ -748,12 +748,23 @@ body.cart-open .cart-drawer{
     position:absolute;top:100%;left:0;right:0;
     flex-direction:column;background:#fff;
     padding:24px;gap:0;align-items:stretch;
-    transform:translateY(-12px);opacity:0;pointer-events:none;
-    transition:.3s var(--ease);box-shadow:var(--shadow-md);
-    flex:unset;margin:0;z-index:100;
+    transform:translateY(-12px);
+    opacity:0;
+    pointer-events:none;
+    visibility:hidden;
+    transition:.3s var(--ease);
+    box-shadow:var(--shadow-md);
+    flex:unset;
+    margin:0;
+    z-index:1100;
   }
-  .nav{z-index:1100}
-  .nav.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav.open{
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
+    visibility:visible;
+  }
+
   .nav a{
     padding:14px 0;font-size:15px;
     border-bottom:1px solid var(--gray-100);
@@ -813,18 +824,37 @@ body.cart-open .cart-drawer{
     font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   }
   .filter-overlay{
-    position:fixed;inset:0;background:rgba(28,26,23,.36);z-index:80;
-    opacity:0;pointer-events:none;transition:opacity .25s var(--ease);
+    position:fixed;inset:0;background:rgba(28,26,23,.36);z-index:95;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s var(--ease);
+    visibility:hidden;
   }
+  body.filters-open .filter-overlay{
+    opacity:1;
+    pointer-events:auto;
+    visibility:visible;
+  }
+
   .filters{
-    position:fixed;top:0;left:0;bottom:0;z-index:90;width:min(88vw,360px);
+    position:fixed;top:0;left:0;bottom:0;z-index:100;width:min(88vw,360px);
     display:block;overflow-y:auto;background:#fff;padding:22px 18px;
-    transform:translateX(-105%);transition:transform .28s var(--ease);
+    transform:translateX(-105%);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform .28s var(--ease), opacity .18s var(--ease), visibility .18s var(--ease);
     box-shadow:var(--shadow-md);
   }
   body.filters-open{overflow:hidden}
-  body.filters-open .filters{transform:translateX(0)}
+  body.filters-open .filters{
+    transform:translateX(0);
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
   body.filters-open .filter-overlay{display:block;opacity:1;pointer-events:auto}
+
   .filters__close{
     display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
     background:var(--pink-50);font-size:20px;line-height:1;

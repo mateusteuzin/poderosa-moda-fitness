@@ -743,7 +743,7 @@ body.cart-open .cart-drawer{
 }
 @media (max-width:900px){
   .header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .menu-toggle{display:flex;z-index:1200}
+  .menu-toggle{display:flex}
   .nav{
     position:absolute;top:100%;left:0;right:0;
     flex-direction:column;background:#fff;
@@ -752,7 +752,6 @@ body.cart-open .cart-drawer{
     transition:.3s var(--ease);box-shadow:var(--shadow-md);
     flex:unset;margin:0;z-index:100;
   }
-  .nav{z-index:1100}
   .nav.open{transform:translateY(0);opacity:1;pointer-events:auto}
   .nav a{
     padding:14px 0;font-size:15px;

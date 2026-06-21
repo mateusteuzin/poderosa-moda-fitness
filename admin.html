@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Poderosa — Produtos</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <section class="admin-login" id="loginView">
+      <div class="admin-login__card">
+        <img src="assets/HEADER - Editado.png" alt="Poderosa" class="admin-login__logo">
+        <p class="admin-kicker">Area da dona</p>
+        <h1>Gerencie sua vitrine</h1>
+        <p>Entre com o e-mail autorizado no Supabase para cadastrar, editar e publicar produtos.</p>
+
+        <form id="loginForm" class="admin-form">
+          <label>
+            E-mail
+            <input type="email" id="loginEmail" autocomplete="email" required>
+          </label>
+          <label>
+            Senha
+            <input type="password" id="loginPassword" autocomplete="current-password" required>
+          </label>
+          <button class="admin-button" type="submit">Entrar no painel</button>
+        </form>
+
+        <div class="admin-alert" id="setupAlert" hidden></div>
+      </div>
+    </section>
+
+    <section class="admin-dashboard" id="dashboardView" hidden>
+      <header class="admin-top">
+        <div>
+          <p class="admin-kicker">Poderosa Moda Fitness</p>
+          <h1>Produtos</h1>
+        </div>
+        <div class="admin-top__actions">
+          <a href="index.html" class="admin-link">Ver loja</a>
+          <button class="admin-button admin-button--ghost" id="logoutButton" type="button">Sair</button>
+        </div>
+      </header>
+
+      <div class="admin-alert admin-alert--dashboard" id="dashboardAlert" hidden></div>
+
+      <div class="admin-layout">
+        <aside class="admin-panel">
+          <div class="admin-panel__head">
+            <h2 id="formTitle">Novo produto</h2>
+            <button class="admin-link" id="newProductButton" type="button">Limpar</button>
+          </div>
+
+          <form id="productForm" class="admin-form admin-form--grid">
+            <input type="hidden" id="productId">
+            <input type="hidden" id="createdAt">
+
+            <label class="admin-field--full">
+              Nome do produto
+              <input type="text" id="nome" required>
+            </label>
+
+            <label>
+              Preço
+              <input type="number" id="preco" min="0" step="0.01" required>
+            </label>
+
+            <label>
+              Preço promocional
+              <input type="number" id="precoPromocional" min="0" step="0.01">
+            </label>
+
+            <label>
+              Categoria
+              <input type="text" id="categoria" list="categoryOptions" required>
+              <datalist id="categoryOptions">
+                <option value="Conjuntos"></option>
+                <option value="Top"></option>
+                <option value="Legging"></option>
+                <option value="Short"></option>
+                <option value="Macaquinho"></option>
+                <option value="Acessorios"></option>
+              </datalist>
+            </label>
+
+            <label>
+              Status
+              <select id="status">
+                <option value="novo">Novo</option>
+                <option value="mais_vendido">Mais vendido</option>
+                <option value="promocao">Promoção</option>
+                <option value="esgotado">Esgotado</option>
+              </select>
+            </label>
+
+            <label>
+              Tamanhos
+              <input type="text" id="tamanhos" placeholder="P, M, G">
+            </label>
+
+            <label>
+              Cores
+              <input type="text" id="cores" placeholder="rosa, preto">
+            </label>
+
+            <label>
+              Estoque opcional
+              <input type="number" id="estoque" min="0" step="1">
+            </label>
+
+            <label>
+              Slug
+              <input type="text" id="slug" placeholder="gerado automaticamente">
+            </label>
+
+            <label class="admin-field--full">
+              Descrição/legenda
+              <textarea id="descricao" rows="4"></textarea>
+            </label>
+
+            <fieldset class="admin-checks admin-field--full">
+              <label><input type="checkbox" id="ativo" checked> Produto ativo na loja</label>
+              <label><input type="checkbox" id="emDestaque"> Destacar na home</label>
+              <label><input type="checkbox" id="noBanner"> Usar na vitrine/banner</label>
+            </fieldset>
+
+            <div class="upload-box admin-field--full">
+              <div>
+                <strong>Fotos do produto</strong>
+                <span>JPG, PNG ou WEBP ate 4MB cada. Arraste na lista para mudar a ordem.</span>
+              </div>
+              <input type="file" id="imageUpload" accept="image/jpeg,image/png,image/webp" multiple>
+              <div class="image-preview-list" id="imagePreviewList"></div>
+            </div>
+
+            <div class="admin-actions admin-field--full">
+              <button class="admin-button" type="submit">Salvar produto</button>
+              <button class="admin-button admin-button--ghost" id="toggleActiveButton" type="button" hidden>Desativar</button>
+              <button class="admin-button admin-button--danger" id="deleteButton" type="button" hidden>Excluir</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="admin-products">
+          <div class="admin-products__head">
+            <div>
+              <h2>Produtos cadastrados</h2>
+              <p id="adminCount">Carregando...</p>
+            </div>
+            <input type="search" id="adminSearch" placeholder="Buscar no painel">
+          </div>
+          <div class="admin-list" id="adminList"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="supabase-config.js"></script>
+  <script src="products.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

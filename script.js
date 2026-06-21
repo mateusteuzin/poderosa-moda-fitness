@@ -747,7 +747,6 @@ function closeCartDrawer() {
   document.getElementById("cartDrawer")?.setAttribute("aria-hidden", "true");
 }
 
-
 function checkoutWhatsApp() {
   const items = getHydratedCartItems();
   if (!items.length) {

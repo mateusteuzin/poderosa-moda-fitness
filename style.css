@@ -772,8 +772,11 @@ body.cart-open .cart-drawer{
   .modal-info h2{font-size:28px}
   .modal-price{font-size:22px}
   .thumb{width:65px;height:80px}
-  .whatsapp{width:52px;height:52px;right:16px;bottom:16px}
+.whatsapp{width:52px;height:52px;right:16px;bottom:18px}
   .whatsapp svg{width:24px;height:24px}
+  /* evita brigar visualmente com o botão de filtro no celular */
+  .filter-toggle{margin-bottom:82px}
+
   .variant-box{grid-template-columns:1fr;max-height:92dvh;overflow:auto}
   .variant-box > img{min-height:260px;max-height:360px}
 }
@@ -782,12 +785,20 @@ body.cart-open .cart-drawer{
   .topbar__item:nth-child(3){display:none}
   .header__inner{padding:12px 16px}
   .logo__img{height:48px}
-  .hero{padding:0 12px}
-  .hero__card{padding:26px 16px 20px;border-radius:18px;min-height:auto}
-  .hero__model{height:200px;max-width:220px}
-  .hero__title{font-size:42px;margin-bottom:12px}
-  .hero__sub{font-size:10px;margin-bottom:20px}
-  .btn{padding:15px 24px;font-size:12px}
+
+  /* 1ª dobra: hero mais compacto e premium */
+  .hero{padding:0 12px;margin-top:10px}
+  .hero__card{padding:18px 16px 14px;border-radius:18px;min-height:auto}
+  .hero__content{padding:0;gap:8px;justify-content:center}
+  .hero__eyebrow{font-size:11px;margin-bottom:6px;letter-spacing:.36em}
+
+  .hero__model{height:228px;max-width:260px;object-position:center 20%}
+  .hero__title{font-size:36px;margin-bottom:8px;line-height:0.95}
+  .hero__sub{font-size:9px;margin-bottom:14px;line-height:1.3}
+
+  .btn{padding:12px 22px;font-size:11px;border-radius:10px}
+  .btn--primary{box-shadow:0 10px 22px -10px rgba(224,116,137,.55)}
+
   .shop{padding:0 12px;margin:24px auto}
   .products__head h2{font-size:13px;letter-spacing:.15em}
   .products__head{align-items:center;display:grid;grid-template-columns:1fr auto;gap:10px}

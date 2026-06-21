@@ -55,23 +55,27 @@ initStorefront();
 
 function initStorefront() {
   bindLayoutEvents();
-  applyUrlCategoryFilters();
   updateCartBadge();
   renderSkeleton();
-
 
   try {
     products = await listPublicProducts();
     pruneUnavailableCartItems();
+
+    // aplica filtro da URL SOMENTE depois que os produtos estiverem carregados
+    applyUrlCategoryFilters();
+
     setupFilterLimits();
     renderFilters();
     applyFilters();
     renderCart();
     updateCartBadge();
   } catch (error) {
+    console.error("Erro ao carregar produtos:", error);
     renderError(error);
   }
 }
+
 
 function normalizeKey(value) {
   return String(value ?? "")
@@ -86,7 +90,8 @@ function applyUrlCategoryFilters() {
   const raw = url.searchParams.get("categoria");
   const key = normalizeKey(raw);
 
-  // reset categoria antes de aplicar
+  // reset categoria/status antes de aplicar
+  // (não chamamos applyUrlCategoryFilters() antes do carregamento dos produtos)
   filters.categories = [];
   filters.__status = null;
 
@@ -94,12 +99,17 @@ function applyUrlCategoryFilters() {
 
 
 
-  // Início / sem categoria
+
+  // Início / sem categoria/status: não aplica filtro base
   if (!key || key === "todas" || key === "inicio") {
     setActiveNav(null);
     updateVitrineTitleAndCount(null);
+    // garante que não bloqueia renderização
+    filters.categories = [];
+    filters.__status = null;
     return;
   }
+
 
   // Novidades / Outlet (status)
   if (SPECIAL_CATEGORIES[key]) {
@@ -119,8 +129,11 @@ function applyUrlCategoryFilters() {
   // Categorias normais
   const normalizedMenuKey = CATEGORY_MENU.find(item => normalizeKey(item.key) === key)?.key;
   if (!normalizedMenuKey) {
+    // Se a categoria não for reconhecida, não bloqueia
     setActiveNav(null);
     updateVitrineTitleAndCount(null);
+    filters.categories = [];
+    filters.__status = null;
     return;
   }
 
@@ -134,6 +147,7 @@ function applyUrlCategoryFilters() {
   const label = CATEGORY_MENU.find(item => item.key === normalizedMenuKey)?.label;
   updateVitrineTitleAndCount(label);
 }
+
 
 function setActiveNav(activeKey) {
   document.querySelectorAll("#nav [data-nav='categoria']").forEach(a => {

@@ -824,8 +824,16 @@ body.cart-open .cart-drawer{
   .product-meta{display:none}
   .product-info .stars{font-size:11px;margin-bottom:6px}
   .price-line{margin-bottom:10px}
+  /* Deixar a marcação/sobreposição da lista mais discreta no celular */
+  .badge-product{font-size:10px; padding:6px 9px; top:10px; left:10px}
+  .product-actions{top:10px; right:10px}
+  .product-card .product-info h3{font-size:12px; margin-bottom:2px; min-height:2.6em}
+  /* Evita o texto grande “encaixar” no meio da foto */
+  .product-image img{object-position:center top;}
+
   .product-info .price{font-size:16px}
   .old-price{font-size:11px}
+
   .buy-btn{padding:10px;border-radius:10px;font-size:12px}
   .filter-group{padding:14px 0}
   .footer__inner{grid-template-columns:1fr;padding:32px 16px;gap:28px}

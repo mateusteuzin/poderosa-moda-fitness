@@ -75,9 +75,6 @@ img{display:block;max-width:100%}
 .nav__link--active{color:var(--pink-500)}
 .nav__outlet{color:var(--pink-500);font-weight:500}
 
-.nav__link--category-active{color:var(--pink-500);font-weight:600}
-
-
 .actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .icon-btn{width:40px;height:40px;display:inline-grid;place-items:center;border-radius:50%;color:var(--ink);transition:all .25s var(--ease);position:relative}
 .icon-btn svg{width:20px;height:20px}

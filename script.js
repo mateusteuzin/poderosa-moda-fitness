@@ -16,22 +16,6 @@ const filters = {
   search: ""
 };
 
-const CATEGORY_MENU = [
-  { key: "body", label: "Body" },
-  { key: "top", label: "Top" },
-  { key: "legging", label: "Legging" },
-  { key: "short", label: "Short" },
-  { key: "macaquinho", label: "Macaquinho" },
-  { key: "conjuntos", label: "Conjuntos" },
-  { key: "acessorios", label: "Acessórios" }
-];
-
-const SPECIAL_CATEGORIES = {
-  novidades: { kind: "status", value: "novo", label: "Novidades" },
-  outlet: { kind: "status", value: "promocao", label: "Outlet" }
-};
-
-
 const statusLabels = {
   novo: "Novo",
   promocao: "Promocao",
@@ -53,12 +37,10 @@ const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL
 
 initStorefront();
 
-function initStorefront() {
+async function initStorefront() {
   bindLayoutEvents();
-  applyUrlCategoryFilters();
   updateCartBadge();
   renderSkeleton();
-
 
   try {
     products = await listPublicProducts();
@@ -72,105 +54,6 @@ function initStorefront() {
     renderError(error);
   }
 }
-
-function normalizeKey(value) {
-  return String(value ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
-}
-
-function applyUrlCategoryFilters() {
-  const url = new URL(window.location.href);
-  const raw = url.searchParams.get("categoria");
-  const key = normalizeKey(raw);
-
-  // reset categoria antes de aplicar
-  filters.categories = [];
-  filters.__status = null;
-
-
-
-
-
-  // Início / sem categoria
-  if (!key || key === "todas" || key === "inicio") {
-    setActiveNav(null);
-    updateVitrineTitleAndCount(null);
-    return;
-  }
-
-  // Novidades / Outlet (status)
-  if (SPECIAL_CATEGORIES[key]) {
-    const special = SPECIAL_CATEGORIES[key];
-
-    filters.__status = special.value;
-    const hidden = document.getElementById("currentCategoryStatus");
-    if (hidden) hidden.value = special.value;
-
-    setActiveNav(key);
-    updateVitrineTitleAndCount(special.label);
-    return;
-
-
-  }
-
-  // Categorias normais
-  const normalizedMenuKey = CATEGORY_MENU.find(item => normalizeKey(item.key) === key)?.key;
-  if (!normalizedMenuKey) {
-    setActiveNav(null);
-    updateVitrineTitleAndCount(null);
-    return;
-  }
-
-  filters.__status = null;
-  const hidden = document.getElementById("currentCategoryStatus");
-  if (hidden) hidden.value = "";
-
-  filters.categories = [normalizedMenuKey];
-  setActiveNav(key);
-
-  const label = CATEGORY_MENU.find(item => item.key === normalizedMenuKey)?.label;
-  updateVitrineTitleAndCount(label);
-}
-
-function setActiveNav(activeKey) {
-  document.querySelectorAll("#nav [data-nav='categoria']").forEach(a => {
-    a.classList.remove("nav__link--category-active");
-  });
-
-  if (!activeKey) {
-    const first = document.querySelector("#nav [data-nav='categoria'][data-categoria='todas']");
-    first?.classList.add("nav__link--category-active");
-    return;
-  }
-
-  // match insensível (normalização) para tolerar variações na URL
-  const activeNorm = normalizeKey(activeKey);
-  const candidates = Array.from(document.querySelectorAll("#nav [data-nav='categoria']"));
-  const el = candidates.find(a => normalizeKey(a.dataset.categoria) === activeNorm);
-  el?.classList.add("nav__link--category-active");
-}
-
-
-function updateVitrineTitleAndCount(title) {
-  const h2 = document.getElementById("vitrineTitle");
-  if (!h2) return;
-
-  if (!title) {
-    h2.textContent = "TODOS OS PRODUTOS";
-    return;
-  }
-
-  const normalized = normalizeKey(title);
-  // garante saída estável mesmo se vier com acentos/caixa
-  if (normalized === "novidades") h2.textContent = "NOVIDADES";
-  else if (normalized === "outlet") h2.textContent = "OUTLET";
-  else h2.textContent = title.toUpperCase();
-}
-
-
 
 function setupFilterLimits() {
   const highestPrice = Math.max(...products.map(product => activePrice(product)), 299);
@@ -272,28 +155,13 @@ function bindPriceFilter() {
 
 function applyFilters() {
   let filtered = products.filter(product => {
-    // status especial (novidades/outlet)
-    if (filters.__status) {
-      if (product.status !== filters.__status) return false;
-    }
-
-    // normaliza categoria para comparar com URL (sem acentos/caixa)
-    const productCategoriaKey = normalizeKey(product.categoria);
-
-    // categoria normal (normaliza acentos/caixa)
-    if (filters.categories.length) {
-      const required = filters.categories.map(c => normalizeKey(c));
-      if (!required.includes(productCategoriaKey)) return false;
-    }
-
+    if (filters.categories.length && !filters.categories.includes(product.categoria)) return false;
     if (filters.sizes.length && !filters.sizes.some(size => product.tamanhos.includes(size))) return false;
     if (filters.colors.length && !filters.colors.some(color => product.cores.includes(color))) return false;
     if (activePrice(product) > filters.maxPrice) return false;
     if (filters.search && !product.nome.toLowerCase().includes(filters.search.toLowerCase())) return false;
     return true;
   });
-
-
 
   filtered = sortProducts(filtered);
   renderProducts(filtered);
@@ -844,30 +712,16 @@ function bindLayoutEvents() {
 }
 
 function resetFilters() {
-  // Mantém a categoria atual vinda da URL (se existir)
-  // e limpa apenas busca, tamanho, cor e preço.
+  filters.categories = [];
   filters.sizes = [];
   filters.colors = [];
   filters.search = "";
-
-  const priceRange = document.querySelector('[data-filter="price"]');
-  if (priceRange) {
-    setupFilterLimits();
-    // setupFilterLimits já atualiza filters.maxPrice
-  }
-
-  // Preserva categoria vinda da URL (inclui status de novidades/outlet)
-  applyUrlCategoryFilters();
-
-
+  setupFilterLimits();
   const searchInput = document.getElementById("searchInput");
   if (searchInput) searchInput.value = "";
-
-  // Re-render para atualizar filtros disponíveis (checkbox/button ficam coerentes)
   renderFilters();
   applyFilters();
 }
-
 
 function openFilterDrawer() {
   document.body.classList.add("filters-open");

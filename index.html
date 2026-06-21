@@ -19,19 +19,10 @@
         <img src="assets/HEADER - Editado.png" alt="Poderosa" class="logo__img" />
       </a>
 
-      <nav class="nav" id="nav" aria-label="Categorias">
-        <a href="index.html" class="nav__link" data-nav="categoria" data-categoria="todas">Início</a>
-        <a href="?categoria=novidades" class="nav__link" data-nav="categoria" data-categoria="novidades">Novidades</a>
-        <a href="?categoria=outlet" class="nav__link" data-nav="categoria" data-categoria="outlet">Outlet</a>
-        <a href="?categoria=body" class="nav__link" data-nav="categoria" data-categoria="body">Body</a>
-        <a href="?categoria=top" class="nav__link" data-nav="categoria" data-categoria="top">Top</a>
-        <a href="?categoria=legging" class="nav__link" data-nav="categoria" data-categoria="legging">Legging</a>
-        <a href="?categoria=short" class="nav__link" data-nav="categoria" data-categoria="short">Short</a>
-        <a href="?categoria=macaquinho" class="nav__link" data-nav="categoria" data-categoria="macaquinho">Macaquinho</a>
-        <a href="?categoria=conjuntos" class="nav__link" data-nav="categoria" data-categoria="conjuntos">Conjuntos</a>
-        <a href="?categoria=acessorios" class="nav__link" data-nav="categoria" data-categoria="acessorios">Acessórios</a>
+      <nav class="nav" id="nav">
+        <a href="#" class="nav__link nav__link--active">Início</a>
+        <a href="#produtos">Novidades</a>
       </nav>
-
 
       <div class="actions">
         <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
@@ -106,18 +97,12 @@
     </aside>
 
     <div class="products">
-        <div class="products__head" data-products-head>
-
+      <div class="products__head">
         <div>
-          <h2 id="vitrineTitle">TODOS OS PRODUTOS</h2>
+          <h2>TODOS OS PRODUTOS</h2>
           <p class="products__count"><span id="count">0</span> produtos encontrados</p>
         </div>
-
         <button class="filter-toggle" id="filterToggle" type="button">Filtrar</button>
-        <input type="hidden" id="currentCategoryStatus" value="">
-
-
-
         <div class="select">
           <select id="sortSelect" aria-label="Ordenar produtos">
             <option value="mais-vendidos">Mais vendidos</option>
